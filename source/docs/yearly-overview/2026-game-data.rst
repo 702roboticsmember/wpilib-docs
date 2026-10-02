@@ -69,23 +69,12 @@ In C++, Java, and Python the Game Data is accessed by using the ``GetGameData`` 
      }
   ```
 
-  ```python
-        data = wpilib.MatchState.get_game_data()
-        if data:
-            match data:
-                case "B":
-                    # Blue case code
-                    ...
-                case "R":
-                    # Red case code
-                    ...
-                case _:
-                    # This is corrupt data
-                    ...
-        else:
-            # Code for no data received yet
-            ...
-  ```
+  .. remoteliteralinclude:: https://raw.githubusercontent.com/robotpy/mostrobotpy/07b318443054388aece6824001e7f7f6f63041ab/snippets/robot/GameData2026/robot.py
+    :language: python
+    :lines: 84-89,91-92,94-95,97-98
+    :lineno-start: 84
+
+.. todo:: Use RLIs for Java/C++ when https://github.com/wpilibsuite/allwpilib/pull/9446 is merged
 
 You can combine the Game Data with the current match time to determine whether your own alliance's hub is currently active. Note however the FMS doesn't send an official match time to robots, only an approximate match time.
 
@@ -206,56 +195,8 @@ For example:
    }
   ```
 
-  ```python
-    def is_hub_active() -> bool:
-        alliance = wpilib.MatchState.get_alliance()
-        # If we have no alliance, we cannot be enabled, therefore no hub.
-        if alliance is None:
-            return False
-
-        # Hub is always enabled in autonomous.
-        if wpilib.RobotState.is_autonomous_enabled():
-            return True
-
-        # At this point if we're not teleop enabled, there is no hub.
-        if not wpilib.RobotState.is_teleop_enabled():
-            return False
-
-        # We're teleop enabled, compute.
-        match_time = wpilib.MatchState.get_match_time()
-        game_data = wpilib.MatchState.get_game_data()
-
-        match game_data:
-            case "R":
-                red_inactive_first = True
-            case "B":
-                red_inactive_first = False
-            case _:
-                # No or invalid game data, assume hub is active.
-                return True
-
-        # Shift 1 is active for blue if red won auto, or red if blue won auto.
-        shift1_active = (
-            not red_inactive_first
-            if alliance == wpilib.Alliance.RED
-            else red_inactive_first
-        )
-
-        if match_time > 130:
-            return True  # Transition shift, hub is active
-        elif match_time > 105:
-            # Shift 1
-            return shift1_active
-        elif match_time > 80:
-            # Shift 2
-            return not shift1_active
-        elif match_time > 55:
-            # Shift 3
-            return shift1_active
-        elif match_time > 30:
-            # Shift 4
-            return not shift1_active
-        else:
-            return True  # End game, hub always active
-  ```
+  .. remoteliteralinclude:: https://raw.githubusercontent.com/robotpy/mostrobotpy/07b318443054388aece6824001e7f7f6f63041ab/snippets/robot/GameData2026/robot.py
+    :language: python
+    :lines: 20-69
+    :lineno-match:
 
