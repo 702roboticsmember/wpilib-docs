@@ -4,7 +4,7 @@ Unit testing is a method of testing code by dividing the code into the smallest 
 
 ### Writing Testable Code
 
-.. note:: This example can be easily adapted to the command-based paradigm by having ``Intake`` inherit from ``SubsystemBase``.
+.. note:: This example can be easily adapted to the Commands v2 framework by having ``Intake`` inherit from ``SubsystemBase``.
 
 Our subsystem will be an Infinite Recharge intake mechanism containing a piston and a motor: the piston deploys/retracts the intake, and the motor will pull the Power Cells inside. We don't want the motor to run if the intake mechanism isn't deployed because it won't do anything.
 
@@ -70,9 +70,9 @@ For more advanced usage of JUnit and Google Test, see the framework docs.
 
 For Java tests to run, make sure that your ``build.gradle`` file contains the following block:
 
-.. rli:: https://raw.githubusercontent.com/wpilibsuite/vscode-wpilib/v2027.0.0-alpha-6/vscode-wpilib/resources/gradle/java/build.gradle
+.. rli:: https://raw.githubusercontent.com/wpilibsuite/vscode-wpilib/v2027.0.0-alpha-7/vscode-wpilib/resources/gradle/java/build.gradle
    :language: groovy
-   :lines: 82-85
+   :lines: 83-86
    :lineno-match:
 
 Use :guilabel:`Test Robot Code` from the Command Palette to run the tests. Results will be reported in the terminal output, each test will have a ``FAILED`` or ``PASSED``/``OK`` label next to the test name in the output. JUnit (Java only) will generate a HTML document in ``build/reports/tests/test/index.html`` with a more detailed overview of the results; if there are any failed tests a link to render the document in your browser will be printed in the terminal output.
